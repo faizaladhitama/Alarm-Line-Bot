@@ -35,6 +35,23 @@ handler = WebhookHandler('193fcdbc69d64b2ef4419c5aa542702c') #Your Channel Secre
 m = Manager()
 db = m.dict()
 
+def watcher(d):
+    while True:
+        try:
+            for key, value in d.items() :
+                future = [date - dt.now() for date in value]
+                future.sort()
+
+                if (len(future) > 0 and future[0].total_seconds()) < 0:
+                    temp = db[key]
+                    item = temp.pop(0)                          
+                    db[key] = temp
+                    print("Alarm menyala")
+        except Exception as e:
+            print(e)
+        time.sleep(3)
+
+
 p = Process(name='p1', target=watcher, args=(db, ))
 p.start()
 
@@ -106,23 +123,6 @@ def handle_text_message(event):
     except ValueError:
         reply = "Jam hanya bisa dari 00-23 dan menit hanya bisa dari 00-59"
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply),timeout=10) #reply the same message from user
-
-def watcher(db):
-    while True:
-        try:
-            for key, value in db.items() :
-                future = [date - dt.now() for date in value]
-                future.sort()
-
-                if (len(future) > 0 and future[0].total_seconds()) < 0:
-                    temp = db[key]
-                    item = temp.pop(0)                          
-                    db[key] = temp
-                    print("Alarm menyala")
-        except Exception as e:
-            print(e)
-        time.sleep(3)
-
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
