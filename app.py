@@ -48,6 +48,7 @@ def watcher(d):
                     item = temp.pop(0)                          
                     db[key] = temp
                     print("Alarm menyala")
+                    line_bot_api.push_message(key, TextSendMessage(text='Alarm menyala !'))
         except Exception as e:
             print(e)
         time.sleep(3)
@@ -80,6 +81,8 @@ def handle_text_message(event):
     reply = ""
     print(event)        
     inp = text.split(" ")   
+    inp.insert(0,event.source.userId)
+    print(inp)    
     try:
         time_set = None
         in_length = len(inp)
