@@ -79,7 +79,10 @@ def callback():
 def handle_text_message(event):
     text = event.message.text #message from user
     reply = ""
-    print(event)        
+    print(event)
+    print(event.message)
+    print(event.source)
+    print(event.source['userId'])
     inp = text.split(" ")   
     inp.insert(0,event.source.userId)
     print(inp)    
