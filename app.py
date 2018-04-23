@@ -84,7 +84,7 @@ def handle_text_message(event):
     print(dir(event.source))
     print(vars(event.source))
     inp = text.split(" ")   
-    inp.insert(0,event.source.userId)
+    inp.insert(0,event.source.user_id)
     print(inp)    
     try:
         time_set = None
