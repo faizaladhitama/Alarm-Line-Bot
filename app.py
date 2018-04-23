@@ -81,8 +81,8 @@ def handle_text_message(event):
     reply = ""
     print(event)
     print(event.message)
-    print(event.source)
-    print(event.source['userId'])
+    print(dir(event.source))
+    print(vars(event.source))
     inp = text.split(" ")   
     inp.insert(0,event.source.userId)
     print(inp)    
